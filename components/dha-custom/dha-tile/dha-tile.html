@@ -1,0 +1,202 @@
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <link rel="import" href="../../components/polymer/polymer.html">
+  <link rel="import" href="../../components/iron-icons/iron-icons.html">
+  <link rel="import" href="../../components/iron-icons/hardware-icons.html">
+  <link rel="import" href="../../components/iron-icons/communication-icons.html">
+  <link rel="import" href="../../components/iron-icons/maps-icons.html">
+  <link rel="import" href="../../components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="../../components/neon-animation/neon-animations.html">
+  <link rel="import" href="../../components/iron-image/iron-image.html">
+  <meta charset="UTF-8">
+</head>
+<body >
+  <dom-module id="dha-tile">
+    <style>
+      :host { 
+              z-index: 0;
+              color: #EF6C00;
+           // display: block;
+        display: flex;
+              transition: var(--material-curve-320);
+              transform: translate(0, 60px);
+              opacity: 100;
+        flex-direction:column;
+          }
+          :host(.active) {
+              transform: translate(0, 0);
+              opacity: 1;
+          }
+          #content {
+              display: block;
+              position: relative;
+              width: 100%;
+              background: #fafafa;
+              border-radius: 2px;
+              box-sizing: border-box;
+              overflow: hidden;
+              cursor: pointer;
+              transition: box-shadow 200ms;
+              transition-timing-function: var(--material-curve);
+              color: #606060;
+              border: none;
+        padding: 5px;
+              box-shadow: 0 5px 10px rgba(0, 0, 0, .15);
+          }
+          :host(:hover) #content {
+              box-shadow: 0 5px 10px rgba(0, 0, 0, .15);
+          }
+          h2 {
+              font-weight: 400;
+              font-size: 48px;
+              margin: 20px 0;
+              transform: translate(-50px, 0);
+              opacity: 0;
+              transition: all 500ms 320ms;
+              transition-timing-function: var(--material-curve-320);
+          }
+          :host(.active) h2 {
+              transform: translate(0, 0);
+              opacity: 1;
+          }
+          h3 {
+              height:28px;
+              overflow: hidden;
+              transform: translate(+20px, 0);
+              opacity: 1;
+              transition: all 600ms 320ms;
+              transition-timing-function: var(--material-curve-320);
+          }
+          :host(.active) h3 {
+              transform: translate(0, 0);
+              opacity: 100;
+          }
+          hr {
+              border: 0;
+              background: #fff;
+              width: 0;
+              height: 1px;
+              opacity: 0.2;
+              margin: 0 0 0 0;
+              transition: width 400ms 320ms;
+              transition-timing-function: var(--material-curve-320);
+          }
+          :host(.active) hr {
+              width: 100%;
+              background: #606060;
+              opacity: 1;
+          }
+          .version {
+            z-index: 3;
+            font-size: 13px;
+            transition: all 400ms 320ms;
+            transition-timing-function: var(--material-curve-320);
+            transform: translate(50px, 0);
+            opacity: 0;
+            overflow: hidden;
+            position: relative;
+      float:right;
+      margin:0;
+          }
+          :host(.active) .version {
+              transform: translate(0, 0);
+              opacity: 1;
+          }
+          .icon {
+            z-index: 3;
+            width:50px; 
+            height:50px; 
+            top:50px; 
+            right: 20px;
+            border-radius: 50%;
+            transition: all 400ms 320ms;
+            transition-timing-function: var(--material-curve-320);
+            transform: translate(50px, 0); 
+            position: absolute;
+            opacity: 0;
+      padding: 10px;
+          }
+          :host(.active) .icon {
+              transform: translate(0, 0);
+              opacity: 0.8;
+          }
+          .cover {
+            z-index: 1;
+            width:100%; 
+            height:100px; 
+            top:0px; 
+            left:0px;
+            transition: all 400ms 320ms;
+            transition-timing-function: var(--material-curve-320);
+            transform: translate(50px, 0); 
+            position: absolute;
+            opacity: 0;
+          }
+          :host(.active) .cover {
+              transform: translate(0, 0);
+              opacity: 0.8;
+          }
+          .gradient {
+            z-index: 2;
+            width:100%; 
+            height:100px; 
+            top:0px; 
+            left:0px;
+            transition: all 400ms 320ms;
+            transition-timing-function: var(--material-curve-320);
+            position: absolute;
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&amp;0+0,1+100 */
+            background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+          }
+          .title {
+              z-index: 3;
+              position: relative;
+              display: block;
+              margin: 0 0 0 0;
+             // line-height: 28px;
+             // display: block;
+       float:left;
+        padding:0;
+        overflow:hidden;
+        height:28px;
+          }
+          .title[extended] {
+              display: block;
+          }
+          .tagline {
+              transition: all 700ms 320ms;
+              transition-timing-function: var(--material-curve-320);
+              transform: translate(-50px, 0);
+              opacity: 0;
+        margin:100px 0 0 0;
+              font-size: 16px;
+              line-height: 20px;
+              height: 60px;
+              overflow: hidden;
+          }
+          :host(.active) .tagline {
+              transform: translate(0, 0);
+              opacity: 1;}
+            </style>
+    <template>
+      <theme-color class=""  id="content" on-click="_openDetail" color="[[content.color]]" class="vertical layout" themed="" themed-border="">
+      <!--  <div class="gradient"></div>-->
+        <iron-image class="cover" sizing="cover" preload fade src="{{_mapContent(content,'cover')}}"></iron-image>
+        <p class="tagline" >{{_mapContent(content,'tagline')}}</p>
+    <div id="info">
+    <p class="title" >{{_mapContent(content,'title')}}</p> <p class="version" >{{_mapContent(content,'version')}}</p>
+      </div>
+    </theme-color>
+    </template>
+  </dom-module>
+  <script src="dha-tile.js"></script>
+</body>
+</html>

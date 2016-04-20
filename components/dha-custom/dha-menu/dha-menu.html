@@ -1,0 +1,78 @@
+<html>
+<head>
+  <link rel="import" href="../../components/polymer/polymer.html">
+  <link rel="import" href="../../components/paper-header-panel/paper-header-panel.html">
+  <link rel="import" href="../../components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="../../components/iron-icons/iron-icons.html">
+  <link rel="import" href="../../components/iron-icons/hardware-icons.html">
+  <link rel="import" href="../../components/iron-icons/communication-icons.html">
+  <link rel="import" href="../../components/iron-icons/maps-icons.html">
+  <link rel="import" href="../../components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="../../components/neon-animation/neon-animations.html">
+  <link rel="import" href="../../components/iron-image/iron-image.html">
+  <link rel="import" href="../../components/paper-button/paper-button.html">
+  <link rel="import" href="../../components/paper-tabs/paper-tabs.html">
+  <meta charset="UTF-8">
+</head>
+<body >
+  <dom-module id="dha-menupoint" assetpath="dha-menupoint/">
+    <style>
+      h3 {
+          font-size: 18px;
+          display: inline;
+          margin: 0 0 0 0;
+          font-weight: 200;
+          transform: translate(+20px, 0);
+          opacity: 1;
+          transition: all 400ms 320ms;
+          transition-timing-function: var(--material-curve-320);
+      }
+      :host(.active) h3 {
+          transform: translate(0, 0);
+          opacity: 100;
+      }
+      iron-icon {
+        width:24px; 
+        height:24px;
+        top: -4px;
+        color: #EF6C00;
+        transition: all 400ms 320ms;
+        transition-timing-function: var(--material-curve-320);
+        transform: translate(50px, 0); 
+        opacity: 0;
+      }
+      :host(.active) iron-icon {
+          transform: translate(0, 0);
+          opacity: 1;
+      }
+      paper-button {
+          color: #616161;
+          --paper-button-ink-color: #EF6C00;
+      }
+      hr {
+          border: 0;
+          background: #616161;
+          width: 0;
+          height: 1px;
+          opacity: 0.2;
+          margin: 0;
+          transition: width 400ms 320ms;
+          transition-timing-function: var(--material-curve-320);
+      }
+      :host(.active) hr {
+          width: 100%;
+          background: #EF6C00;
+          opacity: 1;
+      }
+    </style>
+    <template>
+      <paper-button toggles on-click="_swapContent">
+        <hr themed-reverse="">
+        <iron-icon icon="[[content.icon]]"></iron-icon>
+        <h3>[[content.schema:headline]]</h3>
+      </paper-button>
+    </template>
+  </dom-module>
+  <script src="dha-menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <link rel="import" href="../../components/polymer/polymer.html">
+  <link rel="import" href="../../components/iron-icons/iron-icons.html">
+  <link rel="import" href="../../components/iron-icons/hardware-icons.html">
+  <link rel="import" href="../../components/iron-icons/communication-icons.html">
+  <link rel="import" href="../../components/iron-icons/maps-icons.html">
+  <link rel="import" href="../../components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="../../components/neon-animation/neon-animations.html">
+  <link rel="import" href="../../components/iron-image/iron-image.html">
+  <meta charset="UTF-8">
+</head>
+<body >
+  <dom-module id="dha-detail">
+    <style>
+      :host {
+      display: block;
+      min-width: 220px;
+      margin: 10px;
+      cursor: pointer;
+      transition: box-shadow 0.1s;
+      }
+      :host(:hover) {
+          @apply(--shadow-elevation-2dp);
+      }
+      #content {
+          background: white;
+          border-radius: 3px;
+          border: 1px solid #e5e5e5;
+      }
+      h3 {
+          margin: 0;
+          padding: 10px 16px 0;
+      }
+      p {
+          margin: 0;
+      }
+      a {
+         color: #EF6C00;
+      }
+      #el {
+          cursor: pointer;
+      }
+      iron-image {
+          position: relative;
+          width: 100%;
+          height:200px;
+          overflow: hidden;
+          border-bottom: 1px solid #e5e5e5;
+          top: 0px;
+          left: 0px;
+          bottom: 0px;
+          right: 0px;
+      }
+      .meta {
+          border-top: 1px solid;
+          border-bottom: 1px solid;
+          border-color: var(--divider-color);
+          padding: 10px 16px;
+      }
+      .meta + .meta {
+          border-top: 0;
+      }
+      #el-desc {
+          margin: 0;
+          padding: 10px 16px;
+      }
+      #institution {
+        position: absolute;
+      }
+      ul {
+        margin: 0 0 0 0px;
+        height: 50px;
+        margin-bottom: -10px;
+        padding: 0 0 0 0px;
+      }
+      ul.tags li {
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 25px;
+        background:#FFCC80;
+        border: 1px solid #EF6C00;
+        border-radius: 2px;
+        display: inline-block;    
+        padding: 0 3px 0px 3px;
+      }
+      iron-icon {
+        margin-right: 3px;
+      }
+    </style>
+    <template>
+        <paper-material class="centered" elevation="3">
+          <div id="el" on-tap="nav" target$="[[_element.name]]" view="docs">
+            <iron-image id="detailcover" sizing="cover" src="[[_mapContent(content,'Cover')]]"></iron-image>
+            <span class="horizontal layout wrap flex">
+              <h3>[[_mapContent(content,'Title')]]</h3><h3 id="institution">[[_mapContent(content,'inst')]]</h3>
+            </span>
+          </div>
+          <p id="el-desc">[[_mapContent(content,'Description')]]</p>
+          <div id="el-text" class="center meta">
+              <div id="detailtext">[[_mapContent(content,'Text')]]</div>
+          </div>
+          <div id="el-links" class="horizontal layout center meta">
+            <span class="horizontal layout wrap flex">
+          <template is="dom-if" if="{{_mapContent(content,'Links')}}">
+            <template is="dom-repeat" items="[[_mapContent(content,'Links')]]" as="link">                  
+            <!--        <li ><a href="" >[[link]]</a></li> -->                  
+                <a href="[[link.url]]" target="_blank"><iron-icon icon="open-in-new"></iron-icon>[[link.title]]</a>
+              </template>
+          </template>
+            <template is="dom-if" if="{{_mapContent(content,'Link')}}">
+             <a href="{{_mapContent(content,'Link')}}" target="_blank"><iron-icon icon="open-in-new"></iron-icon>[[_mapContent(content,'Link')]]</a>
+           </template>
+            </span>
+          </div>
+          <div id="el-tags" class="horizontal layout center meta">
+            <span class="horizontal layout wrap flex">
+              <ul class="tags">
+                <template is="dom-repeat" items="[[_mapContent(content,'Tags')]]" as="tag">
+                  <template is="dom-if" if="{{_displayTag(tag)}}">
+                    <li on-tap="_addTag"><iron-icon on-tap="_nonav" icon="maps:local-offer" class="flex-none"></iron-icon>[[tag]]</li>
+                  </template>
+                </template>
+              </ul>
+            </span>
+          </div>
+          <div class="horizontal layout center meta">
+            <div>[[_mapContent(content,'License')]]</div>
+          </div>
+        </paper-material>
+    </template>
+  </dom-module>
+  <script src="dha-detail.js"></script>
+</body>
+</html>

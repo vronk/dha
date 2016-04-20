@@ -1,0 +1,408 @@
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <link rel="import" href="../../components/polymer/polymer.html">
+  <link rel="import" href="../../components/iron-icons/iron-icons.html">
+  <link rel="import" href="../../components/iron-icons/hardware-icons.html">
+  <link rel="import" href="../../components/iron-icons/communication-icons.html">
+  <link rel="import" href="../../components/iron-icons/maps-icons.html">
+  <link rel="import" href="../../components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="../../components/neon-animation/neon-animations.html">
+  <link rel="import" href="../../components/iron-image/iron-image.html">
+  <meta charset="UTF-8">
+</head>
+<body >
+  <dom-module id="dha-table" assetpath="dha-table/">
+    <style>
+      :host {
+        display: block;
+        margin-left:auto;
+        margin-right:auto;
+        padding: 20px;
+      }
+      #elementtable {
+          width: 0px;
+          height: 160px;
+          opacity: 0;
+          border-collapse: collapse;
+          margin: 20px 0px 0px 0px;
+          transition: all 600ms 120ms;
+          transition-timing-function: var(--material-curve-320);
+      overflow: hidden;
+      z-index:0;
+      }
+      :host(.active) #elementtable {
+          width: 100%;
+          opacity: 1;
+      }
+      #elementtable .head {
+          width: 100%;
+          line-height: 48px;
+          font-size: 18px;
+          font-weight: 200;
+          color: rgb(239, 108, 0);
+          display: inline-flex;
+      }
+      #elementtable .row {
+   /* line-height: 48px; */
+          width: 100%;
+          height: 100px;
+          cursor: pointer;
+          display: inline-flex;
+          white-space: nowrap;
+          font-size: 13px;
+          font-weight: 200;
+          letter-spacing: -.012em;
+          border-bottom: 1px solid #EF6C00;
+      margin-top:0px;
+    
+      }
+      :host(.active) #elementtable .row {
+          width: 100%;
+      }
+      .headicon {
+        width:24px; 
+        height:24px;
+        top: +10px;
+        color: #EF6C00;
+        transition: all 400ms 320ms;
+        transition-timing-function: var(--material-curve-320);
+        transform: translate(50px, 0); 
+        opacity: 0;
+      }
+      :host(.active) iron-icon {
+          transform: translate(0, 0);
+          opacity: 1;
+      }
+      #elementtable .description {
+          color: #606060;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 400px;
+      }
+      .row:hover {
+          background: #FFCC80;
+      }
+      [size=xs] #elementtable.description {
+          display: none;
+      }
+      #elementtable .name {
+          white-space: nowrap;
+          font-weight: 400;
+          font-size: 18px;
+      }
+      .icon {
+          margin-top: -5px;
+          top: 5px;
+          position: relative;
+          width:140px; 
+          height:100px;
+          position: relative;
+          left: -10px;
+          transition: all 400ms 320ms;
+          transition-timing-function: var(--material-curve-320);
+          transform: translate(50px, 0); 
+          opacity: 0;
+      }
+      .bibicon {
+          width:50px; 
+          height:50px;
+          position: relative;
+      margin:25px auto;
+          color: #EF6C00;
+          transition: all 400ms 320ms;
+          transition-timing-function: var(--material-curve-320);
+          transform: translate(50px, 0); 
+          opacity: 0;
+      }
+     :host(.active) .icon {
+          transform: translate(0, 0);
+          opacity: 0.8;
+        }
+      .colone {
+        width: 120px;
+        position: relative;
+      }
+      .coltwo {
+     width:900px;
+     overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+      z-index:1;
+      color:#EF6C00;
+      }
+      
+       #rowtitle {
+          margin-bottom:0;
+          margin-top:5px;
+      color: #606060;
+      float:left;
+      width:auto;
+        }
+        
+        .coltwo a {
+          color:#EF6C00;
+          font-weight:normal;
+      min-width:300px;
+      float:left;
+      clear:both;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width:100%;
+        }
+    
+    .coltwo p {
+      color: #606060;
+      flex:flex;
+      clear:both;
+      margin-top:0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      }
+    
+        
+      .colthree {
+        width: 50px;
+        overflow: hidden;
+        display:none;
+
+      }
+      .colfour {
+        max-width: 200px;
+    display:none;
+      }
+      .colfive{
+        display: none;
+      }
+      @media (max-width: 489px) {
+        .colone {
+          width: 100px;
+        }
+        .coltwo {
+          width: 300px;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space:nowrap;
+        }
+    
+        .colfour {
+          display: none;
+        }
+        .colfive {
+          display: none;
+        }
+    
+    #rowtitle {
+      font-size:12px;
+      margin-top:1px;
+      line-height:auto;
+      float:none;
+      white-space: pre-line;
+    }
+    
+    h4 {
+    line-height:12px;
+    }
+    
+    
+    #tagcontainer {
+      display:none !important;
+    }
+    
+    .coltwo p {
+      font-size:10px;
+      line-height:11px;
+      white-space: pre-line;
+      max-width:180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+      
+    .coltwo a {
+      font-size:10px;
+      float:none;
+    } 
+    
+    .icon {
+      width:70px;
+      height:50px;
+    }
+    
+    .cell.dha-table {
+      margin-right:0;
+    
+    }
+    
+    .coltwo.cell {
+      padding-left:0;
+      }
+      
+    #elementtable.dha-table .row.dha-table {
+      height:50px;
+      
+    }
+    
+      
+    }
+      @media (max-width: 1020px) {
+        .colone {
+          width: 120px;
+        }
+        .coltwo {
+          width: 100%;
+        }
+        
+        .colthree {
+          max-width: 150px;
+          overflow: hidden;
+        }
+        .colfour {
+          max-width:50px;
+      display:none;
+
+        }
+        .colfive {
+          display: none;
+        }
+    
+    #tagcontainer {
+    display:block;
+    float:none;
+    }
+    
+      }
+      .cell {
+        padding-left: 10px;
+        margin-right: 10px;
+      }
+      .hidden {
+        overflow: hidden;
+      }
+     .gradient {
+            z-index: 2;
+            width:100%; 
+            height:160px; 
+            bottom:0px; 
+            left:0px;
+            transition: all 400ms 320ms;
+            transition-timing-function: var(--material-curve-320);
+            position: absolute;
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&amp;0+0,1+100 */
+            background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+      }
+      :host(.expanded) .gradient {
+          display: none;
+      }
+      ul {
+        margin: 5px 0 0 0px;
+        margin-bottom: -10px;
+        padding: 0 0 0 0px;
+    
+   
+      }
+      ul.tags li {
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 25px;
+       // border: 1px solid #EF6C00;
+        border-radius: 2px;
+        display: inline-block;    
+        padding: 0 3px 0px 3px;
+    color: #606060;
+    margin:0 3px 0 0; 
+      
+      }
+    
+    #tagcontainer {
+    float:right;
+    max-width:300px;
+    }
+  
+   iron-icon {
+        color:#bdbdbd;
+    display:none;
+      }
+    
+   li:first-child iron-icon:first-child {
+    display:inline-block;
+    }
+  
+    </style>
+    <template>
+      <template is="dom-repeat" items="{{content}}" as="types">
+        <paper-material class="centered" elevation="3">
+          <div id="elementtable">
+            <template is="dom-if" if="[[_multipleTypes(content)]]">
+              <div class="head cell"><iron-icon class="headicon" icon="[[_computeIcon(types)]]"></iron-icon>[[_computeCaption(types)]]</div>
+            </template>
+          
+            <div class="head">
+                <div class="colone cell"><iron-image class="icon" sizing="cover" preload fade src=""></iron-image></div>
+                <div class="coltwo cell" on-tap="_sort">{{_mapHeads(types,'1')}}</div>
+                <div class="colthree cell" on-tap="_sort">{{_mapHeads(types,'2')}}</div>
+                <div class="colfour cell" on-tap="_sort">{{_mapHeads(types,'3')}}</div>
+                <div class="colfive cell" on-tap="_sort">{{_mapHeads(types,'4')}}</div>
+            </div>
+ 
+            <div class="body">
+              <template is="dom-repeat" items="{{types}}" as="lines">
+                  <div class="row" tabindex="0" id="[[lines.schema:name]]" on-click="_openDetail">
+                    <div class="colone cell">
+                      <template is="dom-if" if="[[_computeIfImage(lines)]]">
+                        <iron-image class="icon" sizing="cover" preload fade src="{{_mapContent(lines,'0')}}"></iron-image>
+                      </template>
+                      <iron-icon class="bibicon" icon="[[_computeBibIcon(lines)]]"></iron-icon>
+                    </div>
+                    <div class="coltwo cell"><h4 id="rowtitle">{{_mapContent(lines,'1')}}</h4>
+          <div id="tagcontainer">
+            <ul class="tags">
+                        <template is="dom-repeat" items="{{_mapContent(lines,'3')}}" as="tag">
+                          <template is="dom-if" if="{{_displayTag(tag)}}">
+                            <li on-tap="_addTag"><iron-icon on-tap="_nonav" icon="maps:local-offer" class="flex-none"></iron-icon>[[tag]]</li>
+                          </template>
+                        </template>
+                      </ul>
+            </div>
+                        <a href="[[lines.schema:sameAs.0.url]]" target="_blank" on-click="_nonav">[[lines.schema:sameAs.0.url]]</a>
+                        <p>{{_mapContent(lines,'4')}}</p>
+                        <p>{{_mapContent(lines,'5')}}</p>
+                   
+                    <div class="colthree cell" on-click="_nonav">
+                      <template is="dom-if" if="{{_mapContent(lines,'3')}}">
+                        <a href="[[lines.schema:sameAs.0.url]]" target="_blank"><iron-icon class="bibicon" icon="open-in-new"></iron-icon></a>
+                      </template>
+                    </div>
+                    <div class="colfour cell" on-click="_nonav">
+                    </div>
+                    <div class="colfive cell">{{_mapContent(lines,'4')}}</div>
+                  </div>
+              </template>
+              <template is="dom-if" if="[[_multipleTypes(content)]]">
+               <div class="row" tabindex="0" ></div>
+               <div class="row" tabindex="0" ></div>
+               <div class="row" tabindex="0" ></div>
+              </template>
+            </div>
+          </div>
+          <template is="dom-if" if="[[_multipleTypes(content)]]">
+            <template is="dom-if" if="[[_collapsed()]]">
+              <div class="gradient" on-tap="_expand"></div>
+            </template>
+          </template>
+        </paper-material>
+      </template>
+    </template>
+  </dom-module>
+  <script src="dha-table.js"></script>
+</body>
+</html>

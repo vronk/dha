@@ -1,0 +1,176 @@
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <link rel="import" href="../../components/polymer/polymer.html">
+  <link rel="import" href="../../components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="../../components/iron-icons/iron-icons.html">
+  <link rel="import" href="../../components/iron-icons/hardware-icons.html">
+  <link rel="import" href="../../components/iron-icons/communication-icons.html">
+  <link rel="import" href="../../components/iron-icons/maps-icons.html">
+  <link rel="import" href="../../components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="../../components/neon-animation/neon-animations.html">
+  <link rel="import" href="../../components/iron-image/iron-image.html">
+  <link rel="import" href="../../components/paper-button/paper-button.html">
+  <link rel="import" href="../../components/paper-tabs/paper-tabs.html">
+  <link rel="import" href="../dha-table/dha-table.html">
+  <link rel="import" href="../dha-tile/dha-tile.html">
+  <link rel="import" href="../dha-detail/dha-detail.html">
+    <link rel="import" href="../dha-splashpage/dha-splashpage.html">
+  <meta charset="UTF-8">
+</head>
+<body >
+  <dom-module id="dha-page" assetpath="dha-page/">
+    <style>
+      paper-toolbar, #viewbar {
+          background: #fafafa;
+          float: right;
+          right: 5px;
+          position: absolute;
+      }
+      iron-icon {
+        width:24px; 
+        height:24px;
+        padding: 5px;
+      }
+      .content {
+          display: block;
+          padding: 50px 0;
+      }
+      .view,
+      dha-table, dha-detail {
+          width: calc(100% - 16px);
+          max-width: 1100px;
+          margin: 0 auto;
+      }
+      #pagehead {
+        display: inline-block;
+      }
+      
+      @media (max-width: 1132px) {
+          .view {
+              max-width: 880px;
+          }
+      }
+      @media (max-width: 912px) {
+          .view {
+              max-width: 660px;
+          }
+      }
+      @media (max-width: 692px) {
+          .view {
+              max-width: 440px;
+          }
+      }
+      dha-tile.tile, dha-splashtile.tile {
+          width: 220px;
+          margin: 8px;
+      }
+      @media (max-width: 489px) {
+          dha-tile.tile, dha-splashtile.tile {
+              width: calc(100% - 16px);
+          }
+      }
+      ul {
+        margin: 0 0 0 0px;
+        height: 50px;
+        margin-bottom: -10px;
+        padding: 0 0 0 0px;
+      }
+      ul.tags li {
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 25px;
+        background:#FFCC80;
+        border: 1px solid #EF6C00;
+        border-radius: 2px;
+        display: inline-block;    
+        padding: 0 3px 0px 3px;
+      }
+      .startpic {
+        height: 50vh;
+        width: 50%;
+        overflow:hidden;
+      }
+    </style>
+    <template>
+        <div class="flex view vertical layout wrap" >
+          <template is="dom-if" if="[[_visibleViewMenu(view)]]">
+            <div id="viewbar" class="horizontal layout center">
+              <paper-toolbar>
+                <iron-icon icon="apps" class="{{_activeView('apps')}}" on-tap="toggleView" hidden$="[[_availableView('tiles')]]"></iron-icon>
+                <iron-icon icon="view-list" class="{{_activeView('view-list')}}" on-tap="toggleView" hidden$="[[_availableView('list')]]"></iron-icon>
+                <iron-icon icon="view-quilt" class="{{_activeView('view-quilt')}}" on-tap="toggleView" hidden$="[[_availableView('structured')]]"></iron-icon>
+                <!-- <iron-icon icon="view-stream" class="{{_activeView('view-stream')}}" on-tap="toggleView" hidden$="[[_availableView('broad')]]"></iron-icon>
+                <iron-icon icon="view-carousel" class="{{_activeView('view-carousel')}}" on-tap="toggleView" hidden$="[[_availableView('carousel')]]"></iron-icon>
+                <iron-icon icon="view-week" class="{{_activeView('view-week')}}" on-tap="toggleView" hidden$="[[_availableView('timeline')]]"></iron-icon> 
+                -->
+              </paper-toolbar>
+            </div>
+            <div id="page-head" >
+              <h3 class="flex"><span>[[mhead.title]]</span></h3>
+            </div>
+            <div id="pagedesc" class="description"></div>
+            <div id="pagetags">
+              <ul class="tags">
+                <template is="dom-repeat" items="[[mtags]]" as="tag">
+                    <li on-tap="_removeTag"><iron-icon  icon="maps:local-offer" class="flex-none"></iron-icon>[[tag]]</li>
+                </template>
+              </ul>
+            </div>
+          </template>            
+        </div>
+        <div class="view layout horizontal wrap" >
+          <template is="dom-if" if="[[_visibleView('apps', view)]]" restamp="true">
+            <template is="dom-repeat" items="[[content]]">
+              <dha-tile content="[[item]]"   class="tile flex-none"></dha-tile></a>
+            </template>
+          </template>
+        </div>
+        <div class="view layout horizontal wrap" >
+          <template is="dom-if" if="[[_visibleView('start', view)]]" restamp="true">
+            <div class="startpic view layout horizontal wrap" >
+              <iron-image style="width:50%; float:right;" sizing="contain" src="highres_logo.png"></iron-image>
+            </div>
+            <div id="starttext" class="startpic view layout horizontal wrap" >
+            </div>
+            <template is="dom-repeat" items="[[content]]">
+              <dha-splashtile content="[[item]]"   class="tile flex-none"></dha-splashtile></a>
+            </template>
+          </template>
+        </div>
+        <div class="view layout horizontal wrap">
+          <template is="dom-if" if="[[_visibleView('view-list', view)]]" restamp="true">
+            <dha-table events="[[content]]"></dha-table>
+          </template>
+        </div>
+        <div class="view layout horizontal wrap">
+          <template is="dom-if" if="[[_visibleView('view-quilt', view)]]" restamp="true">
+            <dha-table events="[[content]]"></dha-table>
+          </template>
+        </div>
+        <div class="view layout horizontal wrap">
+          <template is="dom-if" if="[[_visibleView('view-stream', view)]]" restamp="true">
+            <dha-table events="[[content]]"></dha-table>
+          </template>
+        </div>
+        <div class="view layout horizontal wrap">
+          <template is="dom-if" if="[[_visibleView('view-carousel', view)]]" restamp="true">
+            <dha-table events="[[content]]"></dha-table>
+          </template>
+        </div>
+        <div class="view layout horizontal wrap">
+          <template is="dom-if" if="[[_visibleView('view-week', view)]]" restamp="true">
+            <dha-table events="[[content]]"></dha-table>
+          </template>
+        </div>
+        <div class="view layout horizontal wrap">
+          <template is="dom-if" if="[[_visibleView('detail', view)]]" restamp="true">
+            <dha-detail events="[[content]]" prev="[[lastview]]" cevent="[[dnode]]"></dha-detail>
+          </template>
+        </div>
+    </template>
+  </dom-module>
+  <script src="dha-page.js"></script>
+</body>
+</html>
